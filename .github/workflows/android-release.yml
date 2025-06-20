@@ -3,7 +3,7 @@ name: Build & Release APK
 on:
   push:
     tags:
-      - 'v*' # 仅在 push tag 时发布
+      - 'v*' # 仅在推送以v开头的tag时触发发布
   pull_request:
     branches: [ main, master ]
   workflow_dispatch:
@@ -21,6 +21,11 @@ jobs:
       with:
         distribution: 'temurin'
         java-version: '17'
+
+    - name: Convert gradlew to Unix format
+      run: |
+        sudo apt-get update && sudo apt-get install dos2unix -y
+        dos2unix gradlew
 
     - name: Grant execute permission for gradlew
       run: chmod +x ./gradlew
