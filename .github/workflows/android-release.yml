@@ -3,7 +3,7 @@ name: Build & Release APK
 on:
   push:
     tags:
-      - 'v*' # 仅在推送以v开头的tag时触发发布
+      - 'v*'
   pull_request:
     branches: [ main, master ]
   workflow_dispatch:
@@ -30,8 +30,9 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x ./gradlew
 
+    # 如果你没有上传 release-key/irbaby.jks 到仓库，请用 assembleDebug，否则用 assembleRelease
     - name: Build APK
-      run: ./gradlew assembleRelease
+      run: ./gradlew assembleDebug
 
     - name: Upload APK artifact
       uses: actions/upload-artifact@v4
